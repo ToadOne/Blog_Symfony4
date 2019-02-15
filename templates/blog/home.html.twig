@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %} CanadianMaple - Blog{% endblock %}
+{% block body %}
+
+
+<div class="start_article">
+
+    <h1>Actualité du blog </h1>
+    
+</div>
+
+
+<section class="articles">
+
+{% for article in article %}
+    <articles>
+        <h3 class="article-title">{{article.title}}</h3>
+        <div class="metadata">Ecrit le {{ article.createdAt | date('d/m/Y') }} a {{ article.createdAt | date('H:i') }} dans la catégorie {{ article.category.title }}</div>
+        <hr class="my-4">
+        <img src="{{ article.image}}" alt=""><br>
+        <div class="content">
+            
+            {{ article.content }} <br>
+            <a href="{{ path('blog_show', {'id' : article.id})}}" class="btn btn-outline-success">Lire la suite</a>        
+        </div>
+    </articles><br>
+    {% endfor %}
+</section>
+
+{% endblock %}

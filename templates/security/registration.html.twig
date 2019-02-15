@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block title %} CanadianMaple - Inscription{% endblock %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <style>
+        .note
+        {
+            text-decoration: underline;
+        }
+    </style>
+
+    <h1>Inscription </h1>
+
+    <h5> Bienvenue sur la page d'inscription</h5>
+    <h5> Veuillez choisir un Nom d'Utilisateur, Adresse E-mail, ainsi qu'un Mot de Passe</h5>
+    <ul>
+        <li>
+            <p class="note">  NOTE : Votre mot de passe doit etre égal ou supérieur a 8 caractères </p>
+        </li>
+        <li>
+            <p class="note">  NOTE : Votre mot de passe doit comporter des chiffres et des lettres </p>
+        </li>
+        
+    </ul>
+    
+
+    <div class="content">
+
+    {{form_start(form)}}
+
+    {{form_row(form.username, {'label' : 'Nom D\'utilisateur', 'attr' : {'placeholder' : 'Nom d\'utilisateur'}})}}</br>
+    {{form_row(form.email, {'label' : 'E-mail de l\'utilisateur', 'attr' : {'placeholder' : 'exemple@exemple.com'}})}}</br>
+    {{form_row(form.password, {'label' : 'Mot de passe de l\'utilisateur', 'attr' : {'placeholder' : 'Votre mot de passe'}})}}</br>
+    {{form_row(form.confirm_password, {'label' : 'Confirmez le mot de passe', 'attr' : {'placeholder' : 'Confirmez votre mot de passe'}})}}</br>
+    <button type="submit" class="btn btn-outline-success">Valider !</button>
+    {{form_end(form)}}
+
+    
+
+{% endblock %}

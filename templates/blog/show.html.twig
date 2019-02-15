@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <articles>
+        <h2>{{article.title}}</h2>
+        <div class="metadata">Ecrit le {{ article.createdAt | date('d/m/Y') }} a {{ article.createdAt | date('H:i') }} dans la catégorie {{ article.category.title }}</div>
+        <div class="content">
+            <img class="img" src="{{ article.image}}" alt=""/><br>
+            <hr>
+            <p>{{article.content}}</p>
+            <hr>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a type="button" href="{{ path('blog_edit', {'id': article.id}) }}" class="btn btn-outline-danger" >
+            Modifier l'article
+            </a>
+        {% endif %}
+        </div>
+        
+        
+    </articles><br>
+
+    <section class="commentaires">
+        <h4>{{ article.comments | length}}  Commentaires </h4>
+        {% for comment in article.comments %}
+            <div class="comment">
+                <div class="row">
+                    <div class="col-3">
+                        {{ comment.author }} (<small>{{ comment.createdAt | date(' d/m/Y à H:i ')  }}</small>)
+                    </div>
+                    <div class="col">
+                        {{ comment.content | raw}}
+                    </div>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a type="button" class="btn btn-outline-primary" href="{{ path('comment_delete', {'id': comment.id}) }}" >Supprimer</a>
+                    {% endif %}
+                    
+                </div>
+            </div></br></br>
+        {% endfor %}
+
+        <hr>
+        {% if app.user %}
+            <h4> Poster un commentaire </h4>
+
+            {{form_start(commentForm) }}
+
+            {{form_row(commentForm.author , { 'attr' : {'placeholder' : 'Votre Nom d\'Utilisateur' , 'class' : "form-control"}}) }}
+            {{form_row(commentForm.content, { 'attr' : {'placeholder' : "Votre commentaire", 'class' : "form-control"}}) }} </br>
+
+            <button type="submit" class="btn btn-outline-success">Valider mon commentaire</button>
+
+            {{form_end(commentForm) }}
+        {% else %}
+            <h3> Pour commenter ce post, Veuillez vous connecter ...</h3>
+            <a href="{{path('security_login')}}" class="btn btn-primary">
+            Connexion
+            </a>
+        {% endif  %}
+    </section></br>
+
+{% endblock %}
